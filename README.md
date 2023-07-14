@@ -1,12 +1,3 @@
-# Naming your Repo
-
-Use this template repo to create your own repository in this organization.    
-Please name your repo `[semester][yeartwodigits]_[lastname]_[firstname]`.  For example s21_hathaway_j
-
-- Spring = S
-- Fall = F
-- Winter = W
-
 # Blank Project Template
 
 A blank project repository for folder structure and naming guidance.  The `confidentiality_agreement.md` can be used if you are working with a client.  Please make sure to create a private repo for client work.
