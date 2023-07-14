@@ -1,4 +1,4 @@
-# Store links and pdfs here.
+# Store links and pdfs here
 
 Modeled After:
 - https://github.com/Cledersonbc/tic-tac-toe-minimax/blob/master/py_version/minimax.py
