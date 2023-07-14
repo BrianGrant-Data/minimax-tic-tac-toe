@@ -2,30 +2,8 @@
 Modeled after: 
 - https://github.com/Cledersonbc/tic-tac-toe-minimax/blob/master/py_version/minimax.py
 
-Other References:
-- https://realpython.com/tic-tac-toe-ai-python/#step-4-equip-the-computer-with-artificial-intelligence
-- https://inventwithpython.com/chapter10.html
-- https://github.com/javacodingcommunity/TicTacToeAI-with-Minimax
-
-Next Steps:
-- Add a quit function so you don't have to play the game completely 
-- Update the move options so they're more intuitive
-- Update minimax() so move one isn't random
-- if the move isn't valid, ask for a different input
-- Fix this situation: (when you don't pick a move it will fail to make the game winning action until Turn 4)
----------------
-| X || X || X |
----------------
-| X ||   ||   |
----------------
-|   ||   ||   |
----------------
-- Add object oriented programming
-    - turn players and board in objects
-- Add the ability to play in a web browser
-- Add the ability to play remotely
+Note: See references folder
 """
-
 
 '''Setup Environment
 '''
