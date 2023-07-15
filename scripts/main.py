@@ -2,30 +2,10 @@
 Modeled after: 
 - https://github.com/Cledersonbc/tic-tac-toe-minimax/blob/master/py_version/minimax.py
 
-Other References:
-- https://realpython.com/tic-tac-toe-ai-python/#step-4-equip-the-computer-with-artificial-intelligence
-- https://inventwithpython.com/chapter10.html
-- https://github.com/javacodingcommunity/TicTacToeAI-with-Minimax
 
-Next Steps:
-- Add a quit function so you don't have to play the game completely 
-- Update the move options so they're more intuitive
-- Update minimax() so move one isn't random
-- if the move isn't valid, ask for a different input
-- Fix this situation: (when you don't pick a move it will fail to make the game winning action until Turn 4)
----------------
-| X || X || X |
----------------
-| X ||   ||   |
----------------
-|   ||   ||   |
----------------
-- Add object oriented programming
-    - turn players and board in objects
-- Add the ability to play in a web browser
-- Add the ability to play remotely
+=======
+Note: See references folder
 """
-
 
 '''Setup Environment
 '''
@@ -252,9 +232,9 @@ def take_human_turn(c_choice, h_choice):
     # Dictionary of valid moves
     move = -1
     moves = {
-        11: [0, 0], 12: [0, 1], 13: [0, 2],
-        21: [1, 0], 22: [1, 1], 23: [1, 2],
-        31: [2, 0], 32: [2, 1], 33: [2, 2],
+        1: [0, 0], 2: [0, 1], 3: [0, 2],
+        4: [1, 0], 5: [1, 1], 6: [1, 2],
+        7: [2, 0], 8: [2, 1], 9: [2, 2],
     }
 
     clean()
@@ -263,8 +243,9 @@ def take_human_turn(c_choice, h_choice):
 
     while move < 1 or move > 9:
         try:
-            move = input('Pick move: row#column# (use integers 1, 2, 3): ') # Accepts an turn input from the user
-            coord = moves[str(move)] # Checks user's move against the dictionary of valid moves then returns the full coordinates
+
+            move = int(input('Use numpad (1..9): ')) # Accepts an turn input from the user
+            coord = moves[move] # Checks user's move against the dictionary of valid moves then returns the full coordinates
             can_move = take_action(coord[0], coord[1], HUMAN)
 
             if not can_move:
@@ -275,6 +256,7 @@ def take_human_turn(c_choice, h_choice):
             exit()
         except (KeyError, ValueError):
             print('Bad choice')
+
 
 '''Main()
 '''
