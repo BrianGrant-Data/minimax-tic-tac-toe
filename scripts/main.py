@@ -175,7 +175,7 @@ def minimax(board_state, depth, player):
 
     return best
 
-def minimax_brian(board_state, depth, player_max, player_min, alpha, beta):
+def minimax1(board_state, depth, player_max, player_min, alpha, beta):
     """
     
     """
