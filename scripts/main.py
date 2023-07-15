@@ -2,6 +2,8 @@
 Modeled after: 
 - https://github.com/Cledersonbc/tic-tac-toe-minimax/blob/master/py_version/minimax.py
 
+
+=======
 Note: See references folder
 """
 
@@ -241,6 +243,7 @@ def take_human_turn(c_choice, h_choice):
 
     while move < 1 or move > 9:
         try:
+
             move = int(input('Use numpad (1..9): ')) # Accepts an turn input from the user
             coord = moves[move] # Checks user's move against the dictionary of valid moves then returns the full coordinates
             can_move = take_action(coord[0], coord[1], HUMAN)
@@ -253,7 +256,7 @@ def take_human_turn(c_choice, h_choice):
             exit()
         except (KeyError, ValueError):
             print('Bad choice')
-            
+
 
 '''Main()
 '''
