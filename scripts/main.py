@@ -175,6 +175,34 @@ def minimax(board_state, depth, player):
 
     return best
 
+def minimax_brian(board_state, depth, player_max, player_min, alpha, beta):
+    """
+    
+    """
+    max_score = -infinity # best move/potential boardstate for player1 (thus far found). You start off with infinity in the opposite direction so anything will be better than that
+    min_score = +infinity # best move/potential boardstate for player2 (thus far found)
+
+    # For each move available, rerun minimax on the children of those moves but with the opponent as the player
+
+    # 1 Follow the above loop until:
+    
+    #   - there are no moves available (turn 10) or 
+    if depth == 0:
+        return board_state
+    
+    #   - the game has ended
+    if game_over(board_state) == True:
+        return board_state
+
+    # 2 Score that board state as +1, 0, or -1 using minimax
+    score = check_state(board_state)
+
+    # 3a If this is the best option for the opponent save that score and pass it up 
+    min_score = (min(min_score, score))
+
+    # 3b If this is the best option for the player save that score and pass it up 
+    max_score = (max(max_score, score))
+
 
 '''Game Actions
 
