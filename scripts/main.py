@@ -183,10 +183,12 @@ def minimax(board_state, depth, player):
     """
 
     # This is a placeholder: since the original minimax has a "player" argument I convert it into "is_maximing" INSIDE the function so it can be plugged in
-    if player == COMP: 
+    if player == +1: 
         is_maximizing = True
-    else: 
+    elif player == -1:
         is_maximizing = False
+    else: 
+        exit
 
     # Set key variables: the score to beat, the best move and the available moves
     max_score = -infinity # best move/potential boardstate for player1 (thus far found). You start off with infinity in the opposite direction so anything will be better than that
@@ -230,6 +232,7 @@ def minimax(board_state, depth, player):
                 current_move[0], current_move[1] = x, y
                 # update best_move with it's position and score
                 if current_score > max_score:
+                    max_score = current_score
                     best_move = current_move 
           
 
@@ -248,6 +251,7 @@ def minimax(board_state, depth, player):
 
                 # update best_move with it's position and score
                 if current_score < min_score:
+                    min_score = current_score
                     best_move = current_move         
 
         
