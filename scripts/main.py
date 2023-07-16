@@ -176,10 +176,16 @@ def minimax(board_state, depth, player):
 
     return best
 
-def minimax1(board_state, depth, is_maximizing, alpha, beta):
+def minimax1(board_state, depth, player):
     """
+    return: the best_move's x, y, and score 
     depth = how many more turns there can be
     """
+
+    if player == COMP: # This is a placeholder: since the original minimax has a "player" argument I convert it into "is_maximing" INSIDE the function so it can be plugged in
+        is_maximizing = True
+    else: 
+        is_maximizing = False
 
     # Set key variables: the score to beat, the best move and the available moves
     max_score = -infinity # best move/potential boardstate for player1 (thus far found). You start off with infinity in the opposite direction so anything will be better than that
@@ -192,32 +198,35 @@ def minimax1(board_state, depth, is_maximizing, alpha, beta):
     else:
         print(f'ValueError: is_maximizing == {is_maximizing}. Change it to True or False.')
 
-    # For each move available, find out if it yields a better score by reruning minimax on the children of those moves but with the opponent as the player
+    # For each available move, find out if it yields a better score by re-running minimax on the children of those moves but switch the active player
     for available_move in empty_cells(board_state):
         
-        # test_state = board_state.copy() # Don't do this. It will make a copy each time it runs minimax. That's thousands of copies hogging memory. I think you just need a board state and which move is next in the list
-
-        # 1st, end the loop if the game ended
+        # 1st, end the loop and return the best_move's x, y, and a score if the game ended
         if game_over(board_state) == True:
-            return board_state
+            return best_move
         
-        # 2nd, end the loop if there are no moves available / if there are no turns left
+        # 2nd, end the loop and return the best_move's x, y, and a score if there are no moves available / if there are no turns left
         elif depth == 0:
-            return board_state
+            return best_move
         
-        # 3rd, plot the move and then test each of the moves that can come next
+        # 3rd, actually run the minimax algorithm: 
         else:
             x, y = available_move[0], available_move[1] # that's the avaiable_move's 1st and 2nd value from [x, y]
 
             if is_maximizing == True:
+                # plot the move                
                 board_state[x][y] = +1 # updates the board state with a new value in row x, column y
-                current_score = minimax1(board_state, depth -1, False, alpha, beta)
+                
+                # score it by scoring each of the moves that can come next
+                current_score = minimax1(board_state, depth -1, False) # Since we can't score a partial board state we have to loop the function until we reach an end state and then pass the best scores back up the loop
+
+                # update best_move with it's position and score
                 max_score = max(max_score, current_score)
                 best_move[0], best_move[1], best_move[2] = x, y, max_score
 
             else:
                 board_state[x][y] = -1 
-                current_score = minimax1(board_state, depth -1, True, alpha, beta)
+                current_score = minimax1(board_state, depth -1, True)
                 min_score = min(min_score, current_score)
                 best_move[0], best_move[1], best_move[2] = x, y, min_score
         
