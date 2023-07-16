@@ -15,6 +15,7 @@ from random import choice
 import platform
 import time
 from os import system
+import copy
 
 
 '''Game Objects
@@ -175,24 +176,56 @@ def minimax(board_state, depth, player):
 
     return best
 
-def minimax1(board_state, depth, player_max, player_min, alpha, beta):
+def minimax1(board_state, depth, is_maximizing, alpha, beta):
     """
-    
+    depth = how many more turns there can be
     """
+
+    # Set key variables: the score to beat, the best move and the available moves
     max_score = -infinity # best move/potential boardstate for player1 (thus far found). You start off with infinity in the opposite direction so anything will be better than that
     min_score = +infinity # best move/potential boardstate for player2 (thus far found)
 
-    # For each move available, rerun minimax on the children of those moves but with the opponent as the player
+    if is_maximizing == True: # == True is redundant but is added here to make 1st working version as readable as possible
+        best_move = ['x', 'y', max_score] # x & y are place holders at this time
+    elif is_maximizing == False:
+        best_move = ['x', 'y', min_score]
+    else:
+        print(f'ValueError: is_maximizing == {is_maximizing}. Change it to True or False.')
 
-    # 1 Follow the above loop until:
-    
-    #   - there are no moves available (turn 10) or 
-    if depth == 0:
-        return board_state
-    
-    #   - the game has ended
-    if game_over(board_state) == True:
-        return board_state
+    # For each move available, find out if it yields a better score by reruning minimax on the children of those moves but with the opponent as the player
+    for available_move in empty_cells(board_state):
+        
+        # test_state = board_state.copy() # Don't do this. It will make a copy each time it runs minimax. That's thousands of copies hogging memory. I think you just need a board state and which move is next in the list
+
+        # 1st, end the loop if the game ended
+        if game_over(board_state) == True:
+            return board_state
+        
+        # 2nd, end the loop if there are no moves available / if there are no turns left
+        elif depth == 0:
+            return board_state
+        
+        # 3rd, plot the move and then test each of the moves that can come next
+        else:
+            x, y = available_move[0], available_move[1] # that's the avaiable_move's 1st and 2nd value from [x, y]
+
+            if is_maximizing == True:
+                board_state[x][y] = +1 # updates the board state with a new value in row x, column y
+                current_score = minimax1(board_state, depth -1, False, alpha, beta)
+                max_score = max(max_score, current_score)
+                best_move[0], best_move[1], best_move[2] = x, y, max_score
+
+            else:
+                board_state[x][y] = -1 
+                current_score = minimax1(board_state, depth -1, True, alpha, beta)
+                min_score = min(min_score, current_score)
+                best_move[0], best_move[1], best_move[2] = x, y, min_score
+        
+        # 4th, reset the board back to the old 
+        board_state[x][y] = 0 # updates the board state with a new value in row x, column y
+            
+
+    return best_move
 
     # 2 Score that board state as +1, 0, or -1 using minimax
     score = check_state(board_state)
