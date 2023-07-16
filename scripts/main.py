@@ -147,7 +147,7 @@ def clean():
 minimax()
 '''
 
-def minimax(board_state, depth, player):
+def minimax_original(board_state, depth, player):
     """
 
     """
@@ -176,13 +176,14 @@ def minimax(board_state, depth, player):
 
     return best
 
-def minimax1(board_state, depth, player):
+def minimax(board_state, depth, player):
     """
     return: the best_move's x, y, and score 
     depth = how many more turns there can be
     """
 
-    if player == COMP: # This is a placeholder: since the original minimax has a "player" argument I convert it into "is_maximing" INSIDE the function so it can be plugged in
+    # This is a placeholder: since the original minimax has a "player" argument I convert it into "is_maximing" INSIDE the function so it can be plugged in
+    if player == COMP: 
         is_maximizing = True
     else: 
         is_maximizing = False
@@ -192,22 +193,28 @@ def minimax1(board_state, depth, player):
     min_score = +infinity # best move/potential boardstate for player2 (thus far found)
 
     if is_maximizing == True: # == True is redundant but is added here to make 1st working version as readable as possible
-        best_move = ['x', 'y', max_score] # x & y are place holders at this time
+        best_move = [-1, -1, max_score] # x & y are place holders at this time
     elif is_maximizing == False:
-        best_move = ['x', 'y', min_score]
+        best_move = [-1, -1, min_score]
     else:
         print(f'ValueError: is_maximizing == {is_maximizing}. Change it to True or False.')
 
+    
     # For each available move, find out if it yields a better score by re-running minimax on the children of those moves but switch the active player
     for available_move in empty_cells(board_state):
         
         # 1st, end the loop and return the best_move's x, y, and a score if the game ended
+        # actually we're returning some place holders + a score for some reason
         if game_over(board_state) == True:
-            return best_move
+            score = check_state(board_state)
+            # return best_move
+            return [-1, -1, score]
         
         # 2nd, end the loop and return the best_move's x, y, and a score if there are no moves available / if there are no turns left
         elif depth == 0:
-            return best_move
+            score = check_state(board_state)
+            # return best_move
+            return [-1, -1, score]
         
         # 3rd, actually run the minimax algorithm: 
         else:
@@ -218,17 +225,31 @@ def minimax1(board_state, depth, player):
                 board_state[x][y] = +1 # updates the board state with a new value in row x, column y
                 
                 # score it by scoring each of the moves that can come next
-                current_score = minimax1(board_state, depth -1, False) # Since we can't score a partial board state we have to loop the function until we reach an end state and then pass the best scores back up the loop
+                current_move = minimax(board_state, depth -1, -player) # Since we can't score a partial board state we have to loop the function until we reach an end state and then pass the best scores back up the loop
+                current_score = current_move[2]
+                current_move[0], current_move[1] = x, y
+                # update best_move with it's position and score
+                if current_score > max_score:
+                    best_move = current_move 
+          
 
                 # update best_move with it's position and score
-                max_score = max(max_score, current_score)
-                best_move[0], best_move[1], best_move[2] = x, y, max_score
+                # max_score = max(max_score, current_score)
+                #best_move[0], best_move[1], best_move[2] = x, y, max_score
 
             else:
-                board_state[x][y] = -1 
-                current_score = minimax1(board_state, depth -1, True)
-                min_score = min(min_score, current_score)
-                best_move[0], best_move[1], best_move[2] = x, y, min_score
+                # plot the move                
+                board_state[x][y] = -1 # updates the board state with a new value in row x, column y
+                
+                # score it by scoring each of the moves that can come next
+                current_move = minimax(board_state, depth -1, -player) # Since we can't score a partial board state we have to loop the function until we reach an end state and then pass the best scores back up the loop
+                current_score = current_move[2]
+                current_move[0], current_move[1] = x, y
+
+                # update best_move with it's position and score
+                if current_score < min_score:
+                    best_move = current_move         
+
         
         # 4th, reset the board back to the old 
         board_state[x][y] = 0 # updates the board state with a new value in row x, column y
@@ -236,14 +257,14 @@ def minimax1(board_state, depth, player):
 
     return best_move
 
-    # 2 Score that board state as +1, 0, or -1 using minimax
-    score = check_state(board_state)
+    # # 2 Score that board state as +1, 0, or -1 using minimax
+    # score = check_state(board_state)
 
-    # 3a If this is the best option for the opponent save that score and pass it up 
-    min_score = (min(min_score, score))
+    # # 3a If this is the best option for the opponent save that score and pass it up 
+    # min_score = (min(min_score, score))
 
-    # 3b If this is the best option for the player save that score and pass it up 
-    max_score = (max(max_score, score))
+    # # 3b If this is the best option for the player save that score and pass it up 
+    # max_score = (max(max_score, score))
 
 
 '''Game Actions
