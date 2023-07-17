@@ -145,35 +145,6 @@ def clean():
 minimax()
 '''
 
-def minimax_original(board_state, depth, player):
-    """
-
-    """
-    if player == COMP:
-        best = [-1, -1, -infinity]
-    else:
-        best = [-1, -1, +infinity]
-
-    if depth == 0 or game_over(board_state):
-        score = check_state(board_state)
-        return [-1, -1, score]
-
-    for cell in empty_cells(board_state):
-        x, y = cell[0], cell[1]
-        board_state[x][y] = player
-        score = minimax(board_state, depth - 1, -player)
-        board_state[x][y] = 0
-        score[0], score[1] = x, y
-
-        if player == COMP:
-            if score[2] > best[2]:
-                best = score  # max value
-        else:
-            if score[2] < best[2]:
-                best = score  # min value
-
-    return best
-
 def minimax(board_state, depth, player):
     """
     return: the best_move's x, y, and score 
