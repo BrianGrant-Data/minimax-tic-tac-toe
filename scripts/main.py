@@ -8,15 +8,11 @@ Note: See references folder
 '''Setup Environment
 '''
 
-print("hello world!")
-
 from math import inf as infinity
 from random import choice
 import platform
 import time
 from os import system
-import copy
-
 
 '''Game Objects
 
