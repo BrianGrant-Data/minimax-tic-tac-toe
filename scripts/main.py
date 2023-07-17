@@ -7,8 +7,9 @@ Modeled after:
 Note: See references folder
 """
 
-'''Setup Environment
-'''
+
+
+'''Setup Environment'''
 
 from math import inf as infinity
 from random import choice
@@ -16,12 +17,9 @@ import platform
 import time
 from os import system
 
-'''Game Objects
 
-HUMAN:
-COMP: 
-board:
-'''
+
+'''Game Objects'''
 
 HUMAN = -1
 COMP = +1
@@ -32,16 +30,8 @@ board = [
 ]
 
 
-'''Administrative Functions
 
-render()
-empty_cells
-check_victory()
-check_state()
-check_valid()
-game_over()
-clean()
-'''
+'''Administrative Functions'''
 
 def render(board_state, c_choice, h_choice):
     """
@@ -140,10 +130,7 @@ def clean():
 
 
 
-'''Artificial Intelligence
-
-minimax()
-'''
+'''Artificial Intelligence'''
 
 def minimax(board_state, depth, player):
     """
@@ -222,12 +209,8 @@ def minimax(board_state, depth, player):
     return best_move
 
 
-'''Game Actions
 
-take_action()
-take_ai_turn()
-take_human_turn()
-'''
+'''Game Actions'''
 
 def take_action(x, y, player): # based on the original set_move() function
     """
@@ -302,8 +285,8 @@ def take_human_turn(c_choice, h_choice):
             print('Bad choice')
 
 
-'''Main()
-'''
+
+'''Main()'''
 
 def main():
     """
@@ -372,8 +355,8 @@ def main():
     exit()
 
 
-'''Press Play
-'''
+
+'''Press Play'''
 
 if __name__ == '__main__':
     main()
