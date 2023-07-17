@@ -191,7 +191,7 @@ def minimax(board_state, depth, player):
             # plot the move                
             board_state[x][y] = +1 # updates the board state with a new value in row x, column y
             
-            # score it selecting the best score available from each of the moves that can come next
+            # score the move by selecting the best score available from each of the moves that can come next
             current_move = minimax(board_state, depth -1, -player) # Since we can't score a partial board state we have to loop the function until we reach an end state and then pass the best scores back up the loop
             current_score = current_move[2]
             current_move[0], current_move[1] = x, y
@@ -200,11 +200,6 @@ def minimax(board_state, depth, player):
                 max_score = current_score
                 best_move = current_move 
         
-
-            # update best_move with it's position and score
-            # max_score = max(max_score, current_score)
-            #best_move[0], best_move[1], best_move[2] = x, y, max_score
-
         else:
             # plot the move                
             board_state[x][y] = -1 # updates the board state with a new value in row x, column y
@@ -220,20 +215,11 @@ def minimax(board_state, depth, player):
                 best_move = current_move         
 
         
-        # 4th, reset the board back to the old 
+        # 4th, reset the board back to the how it was before minimax() since this function **suggests** moves but doesn't make them
         board_state[x][y] = 0 # updates the board state with a new value in row x, column y
             
 
     return best_move
-
-    # # 2 Score that board state as +1, 0, or -1 using minimax
-    # score = check_state(board_state)
-
-    # # 3a If this is the best option for the opponent save that score and pass it up 
-    # min_score = (min(min_score, score))
-
-    # # 3b If this is the best option for the player save that score and pass it up 
-    # max_score = (max(max_score, score))
 
 
 '''Game Actions
