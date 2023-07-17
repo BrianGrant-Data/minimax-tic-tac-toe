@@ -175,7 +175,7 @@ def minimax_original(board_state, depth, player):
 def minimax(board_state, depth, player):
     """
     return: the best_move's x, y, and score 
-    depth = how many more turns there can be
+    depth = how many more turns there can be. It's normally set as len(empty_cells())
     """
 
     # This is a placeholder: since the original minimax has a "player" argument I convert it into "is_maximing" INSIDE the function so it can be plugged in
@@ -198,17 +198,17 @@ def minimax(board_state, depth, player):
         print(f'ValueError: is_maximizing == {is_maximizing}. Change it to True or False.')
 
     # 1st, see if the game ended and if so return the best_move's x, y, and a score
-        if game_over(board_state) == True:
-            score = check_state(board_state)
-            # return best_move
-            return [-1, -1, score]
+    if game_over(board_state) == True:
+        score = check_state(board_state)
+        # return best_move
+        return [-1, -1, score]
         
     # 2nd, see if there are no moves available / if there are no turns left and if so return the best_move's x, y, and a score 
-        if depth == 0:
-            score = check_state(board_state)
-            # return best_move
-            return [-1, -1, score]
-        
+    if depth == 0:
+        score = check_state(board_state)
+        # return best_move
+        return [-1, -1, score]
+
     # 3rd, For each available move, find out if it yields a better score by re-running minimax on the children of those moves but switch the active player
     for available_move in empty_cells(board_state):
         
